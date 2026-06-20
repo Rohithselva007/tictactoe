@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: tictactoe
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn tictactoe.wsgi"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
