@@ -1,0 +1,39 @@
+{% extends "game/base.html" %}
+{% block title %}Game History — Tic-Tac-Toe{% endblock %}
+
+{% block content %}
+<div class="page-wrap">
+  <h2 class="page-title">Your game history</h2>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Result</th>
+        <th>Difficulty</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for game in games %}
+        <tr>
+          <td class="rank">{{ forloop.counter }}</td>
+          <td>
+            {% if game.result == 'player_win' %}
+              <span class="badge badge-win">Win</span>
+            {% elif game.result == 'ai_win' %}
+              <span class="badge badge-loss">Loss</span>
+            {% else %}
+              <span class="badge badge-draw">Draw</span>
+            {% endif %}
+          </td>
+          <td>{{ game.get_difficulty_display }}</td>
+          <td class="muted">{{ game.created_at|date:"M d, Y H:i" }}</td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="4" class="empty-row">No completed games yet. <a href="/">Play now</a></td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

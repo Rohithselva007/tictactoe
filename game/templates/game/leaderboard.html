@@ -1,0 +1,40 @@
+{% extends "game/base.html" %}
+{% block title %}Leaderboard — Tic-Tac-Toe{% endblock %}
+
+{% block content %}
+<div class="page-wrap">
+  <h2 class="page-title">Leaderboard</h2>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Player</th>
+        <th>Wins</th>
+        <th>Losses</th>
+        <th>Draws</th>
+        <th>Win rate</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for profile in profiles %}
+        <tr {% if profile.user == request.user %}class="highlight-row"{% endif %}>
+          <td class="rank">{{ forloop.counter }}</td>
+          <td>{{ profile.user.username }}</td>
+          <td class="val-win">{{ profile.wins }}</td>
+          <td class="val-loss">{{ profile.losses }}</td>
+          <td>{{ profile.draws }}</td>
+          <td>
+            <div class="bar-wrap">
+              <div class="bar" style="width: {{ profile.win_rate }}%"></div>
+              <span>{{ profile.win_rate }}%</span>
+            </div>
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="6" class="empty-row">No games played yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
